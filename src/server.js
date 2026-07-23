@@ -1,21 +1,44 @@
 const app = require('./app');
-const { env } = require('./config/environment');
+const {pool} = require('./config/database');
+const {env} = require('./config/environment');
 
 const server = app.listen(env.PORT, () => {
-    console.log(`server is running on ${env.CLIENT_ORIGIN}`
-    );
+  console.log(
+    `Employee Management API listening on http://localhost:${env.PORT}`,
+  );
 });
 
-function shutdown(signal) {
-    console.log(`Received ${signal}. Shutting down gracefully...`);
+let shuttingDown = false;
 
-    server.close(() => {
-        if (error) {
-            console.error('Error during server shutdown:', error);
-            process.exit(1);
-        }
-        process.exit(0);
-    });
+function shutdown(signal) {
+  if (shuttingDown) {
+    return;
+  }
+
+  shuttingDown = true;
+  console.log(`${signal} received. Closing server.`);
+
+  server.close(async (serverError) => {
+    if (serverError) {
+      console.error(
+        'Failed to close the HTTP server cleanly.',
+        serverError,
+      );
+      process.exit(1);
+    }
+
+    try {
+      await pool.end();
+      console.log('PostgreSQL connection pool closed.');
+      process.exit(0);
+    } catch (databaseError) {
+      console.error(
+        'Failed to close the PostgreSQL connection pool.',
+        databaseError,
+      );
+      process.exit(1);
+    }
+  });
 }
 
 process.on('SIGINT', () => shutdown('SIGINT'));
