@@ -1,6 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const departmentRoutes = require('./features/departments/departments.routes');
+const employeeRoutes = require('./features/employees/employees.routes');
 const helmet = require('helmet');
 
 const {checkDatabaseConnection} = require('./config/database');
@@ -30,6 +31,7 @@ app.use(
 );
 
 app.use('/api/departments', departmentRoutes);
+app.use('/api/employees', employeeRoutes);
 
 app.get('/api/health', async (req, res) => {
   const database = await checkDatabaseConnection();

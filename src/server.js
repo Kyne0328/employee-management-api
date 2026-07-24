@@ -8,14 +8,11 @@ const server = app.listen(env.PORT, () => {
   );
 });
 
-let shuttingDown = false;
-
 function shutdown(signal) {
   if (shuttingDown) {
     return;
   }
 
-  shuttingDown = true;
   console.log(`${signal} received. Closing server.`);
 
   server.close(async (serverError) => {

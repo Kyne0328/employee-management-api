@@ -1,6 +1,6 @@
 const { pool } = require('../../config/database');
 
-async function findAllDepartmentsWithPositions() {
+async function getAllDepartmentsWithPositions() {
     const result = await pool.query(`
         SELECT department.department_id AS "departmentId",
             department.department_name AS "departmentName",
@@ -14,5 +14,5 @@ async function findAllDepartmentsWithPositions() {
 }
 
 module.exports = {
-    findAllDepartmentsWithPositions,
+    getAllDepartmentsWithPositions,
 };

@@ -1,7 +1,7 @@
-const { findAllDepartmentsWithPositions } = require('./departments.queries');
+const { getAllDepartmentsWithPositions } = require('./departments.queries');
 
 async function getDepartments(req, res) {
-    const rows = await findAllDepartmentsWithPositions();
+    const rows = await getAllDepartmentsWithPositions();
 
     const departments = new Map();
 
