@@ -1,0 +1,1 @@
+curl -i -X POST http://localhost:5000/api/employees -H "Content-Type: application/json" -d "{\"firstName\":\"Carlo\",\"lastName\":\"Mendoza\",\"positionId\":2,\"empStatus\":1,\"empJoinDate\":\"2026-07-24\"}"

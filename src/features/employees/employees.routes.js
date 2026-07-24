@@ -5,7 +5,9 @@ const {
     createEmployee,
 } = require('./employees.controller');
 
-const createEmployeeSchema = require('./employees.validation');
+const {
+    createEmployeeSchema,
+} = require('./employees.validation');
 
 const { validateRequest } = require('../../middleware/validateRequest');
 
