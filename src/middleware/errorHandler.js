@@ -26,6 +26,16 @@ function errorHandler(error, req, res, next) {
     });
   }
 
+  if (
+    error.code === '23505' &&
+    error.constraint === 'users_username_key'
+  ) {
+    return res.status(409).json({
+      success: false,
+      message: 'That username is already registered.',
+    });
+  }
+
   console.error(error);
 
   return res.status(500).json({

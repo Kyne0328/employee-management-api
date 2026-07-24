@@ -8,10 +8,10 @@ const environmentSchema = z.object({
     .default('development'),
 
   PORT: z.coerce
-    .number({error: 'PORT must be a number.'})
-    .int({error: 'PORT must be an integer.'})
-    .min(1, {error: 'PORT must be between 1 and 65535.'})
-    .max(65535, {error: 'PORT must be between 1 and 65535.'})
+    .number({ error: 'PORT must be a number.' })
+    .int({ error: 'PORT must be an integer.' })
+    .min(1, { error: 'PORT must be between 1 and 65535.' })
+    .max(65535, { error: 'PORT must be between 1 and 65535.' })
     .default(5000),
 
   CLIENT_ORIGIN: z
@@ -23,11 +23,18 @@ const environmentSchema = z.object({
     .default('http://localhost:5173'),
 
   DATABASE_URL: z
-    .string({error: 'DATABASE_URL is required.'})
+    .string({ error: 'DATABASE_URL is required.' })
     .trim()
-    .min(1, {error: 'DATABASE_URL is required.'})
+    .min(1, { error: 'DATABASE_URL is required.' })
     .refine((value) => URL.canParse(value), {
       error: 'DATABASE_URL must be a valid PostgreSQL URL.',
+    }),
+
+  SESSION_SECRET: z
+    .string({error: 'SESSION_SECRET is required.'})
+    .trim()
+    .min(32, {
+      error: 'SESSION_SECRET must contain at least 32 characters.',
     }),
 });
 
