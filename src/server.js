@@ -9,10 +9,6 @@ const server = app.listen(env.PORT, () => {
 });
 
 function shutdown(signal) {
-  if (shuttingDown) {
-    return;
-  }
-
   console.log(`${signal} received. Closing server.`);
 
   server.close(async (serverError) => {
